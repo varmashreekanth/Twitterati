@@ -3,20 +3,25 @@ package com.portal.util;
 import org.springframework.social.twitter.api.Twitter;
 import org.springframework.social.twitter.api.impl.TwitterTemplate;
 
+import com.liferay.util.portlet.PortletProps;
+
 public class TwitterUtility {
 	
-	public static Twitter getTwitterTemplate(String accountName){
-		String consumerKey = "X0e5A6PQE09N0lkdJluZWTn7V";
-		String consumerSecret = "J5eKvB37YDa3tMyRVDKDInfiCgJ6cJtPJnyFI8uIbp800CxI3M";
-		//String accessToken = "";
-		//String accessTokenSecret = "";
+	/**
+	 * This method authenticates the twitter account of the user and generates the twitterTemplate object
+	 * @return
+	 */
+	public static Twitter getTwitterTemplate(){
 		
-		//Preconditions.checkNotNull(consumerKey);
-		//Preconditions.checkNotNull(consumerSecret);
-		//Preconditions.checkNotNull(accessToken);
-		//Preconditions.checkNotNull(accessTokenSecret);
+		/*start :: Fetching the authentication parameters from the properties file*/
+		String consumerKey = PortletProps.get("consumerKey");
+		String consumerSecret = PortletProps.get("consumerSecret");
+		String accessToken = PortletProps.get("accessToken");
+		String accessTokenSecret = PortletProps.get("accessTokenSecret");
+		/*start :: Fetching the authentication parameters from the properties file*/
 		
-		TwitterTemplate twitterTemplate = new TwitterTemplate(consumerKey, consumerSecret);
+		
+		TwitterTemplate twitterTemplate = new TwitterTemplate(consumerKey, consumerSecret, accessToken, accessTokenSecret);
 		return twitterTemplate;
 		
 	}

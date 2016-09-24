@@ -1,12 +1,7 @@
 package com.portal.helper;
 
-import java.util.List;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-
-import org.springframework.social.twitter.api.Tweet;
+import com.portal.bean.CustomTweetVO;
 
 public interface TwitterViewHelper {
-	public List<Tweet> fetchTweets(String userName);
+	public CustomTweetVO fetchTweets() throws Exception;
 }

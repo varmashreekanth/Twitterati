@@ -14,27 +14,28 @@
 
 package com.portal.controller;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.portlet.bind.annotation.ActionMapping;
 import org.springframework.web.portlet.bind.annotation.RenderMapping;
 
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.portal.bean.CustomTweetVO;
 import com.portal.helper.TwitterViewHelper;
 
 @Controller
 @RequestMapping("VIEW")
 public class TwitterViewController {
 	
+	private static final Log LOG = LogFactoryUtil.getLog(TwitterViewController.class);
+	
 	@Autowired
 	private TwitterViewHelper twitterViewHelper;
+	
+	@Autowired
+	private CustomTweetVO customTweetVO;
 	
 	
 	
@@ -48,17 +49,23 @@ public class TwitterViewController {
 
 	@RenderMapping
 	public String showView(Model model) {
-		model.addAttribute("releaseInfo", ReleaseInfo.getReleaseInfo());
-
+		try{
+			customTweetVO=twitterViewHelper.fetchTweets();//Fetching the latest tweet
+			/*start : Setting values in the model*/
+			model.addAttribute("name",customTweetVO.getName());
+			model.addAttribute("screenName",customTweetVO.getScreenName());
+			model.addAttribute("latestTweet",customTweetVO.getLatestTweet());
+			model.addAttribute("profileImageUrl",customTweetVO.getProfileImageUrl());
+			model.addAttribute("latestTweetDate",customTweetVO.getLatestTweetDate());
+			/*end : Setting values in the model*/
+		}
+		catch(Exception e){
+			LOG.error("Some error occurred while fetching the tweets "+e);
+		}
+		
+		
+		LOG.info("latestTweet "+customTweetVO.getLatestTweet());
 		return "TwitterBook/view";
 	}
-	
-	@ActionMapping(params="action=fetchTweetsByUser")
-	public void fetchTweetsByUser(ActionRequest actionRequest,ActionResponse actionResponse){
-		String userName = ParamUtil.getString(actionRequest, "user", StringPool.BLANK);
-		twitterViewHelper.fetchTweets(userName);
-	}
-	
-	
 
 }
