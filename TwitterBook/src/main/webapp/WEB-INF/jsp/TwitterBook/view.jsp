@@ -24,21 +24,9 @@
 <table class="table table-hover">
 <tr><td colspan="3" align="right"><img src='${profileImageUrl}' class="img-thumbnail"></td></tr>
 <tr><td>Profile Name :</td><td>${name}</td> <td></td></tr>
-<tr><td>Twitter Id :</td><td>${screenName}</td> <td></td></tr>
+<tr><td>Twitter Id :</td><td>@${screenName}</td> <td></td></tr>
 <tr><td>Latest Tweet : </td><td>${latestTweet}</td> <td></td></tr>
 <tr><td>Tweeted on :</td><td>${latestTweetDate}</td> <td></td></tr>
 </table>
-  
-	
-<div class="container" id="twitter">
-		
-	<ul>
-		<li><img src='${profileImageUrl}' class="img-thumbnail"></li>
-		<li>Profile Name : ${name}</li>
-		<li>Twitter Id : ${screenName}</li>
-		<li>Latest Tweet : ${latestTweet}</li>
-		<li>Tweeted on : ${latestTweetDate}</li>
-		
-	<ul>
-</div>
+
 <%-- <c:out escapeXml="true" value="${releaseInfo}" />. --%>
